@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>
+add product
+</title>
+<style>
+			body {
+			background: url(http://subtlepatterns.com/patterns/scribble_light.png) ;
+			}
+			
+			.card {
+  position: relative;
+  float: left;
+  margin-top:3%;
+  margin-right: 50px;
+  width: 200px;
+  height: 320px;
+  border-radius: 10px;
+  background: #fff;
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+
+.card img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+height:100px;
+width:100px;
+}
+		</style>
+</head>
+<body>
+<center>
+<a href="/">Home</a>
+</center>
+	<% if (productArray.length) { %>
+<% productArray.forEach(function(productArray) { %>
+		<div class="card">
+	<br>		
+<p>
+				<form action="/store/updateproduct/<%=(productArray["id"]["S"])%>" method="post">
+				
+<center><h4>Product Name : <input type="text" name="name" value="<%= (productArray["name"]["S"]) %>" /> </h4></center>
+<center><h4>Desctiption : <input type="text" name="description" value="<%= (productArray["description"]["S"]) %>" /></h4></center>
+<center><h4>Cost : <input type="text" name="cost" value="<%= (productArray["cost"]["N"]) %>" /></h4></center>
+<center><h4>category : <input type="text" name="category" value="<%= (productArray["category"]["S"]) %>" /></h4></center>
+<center><h4>quantity : <input type="text" name="quantity" value="<%= (productArray["quantity"]["N"]) %>" /></h4></center>
+			<center><input type="submit" value="Update Product"></center>
+				</form>
+			
+			</p>
+			
+			</div>
+		
+<% }); %>
+<% } %>
+		
+	
+</body>
+</html>

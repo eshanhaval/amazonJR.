@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= tittle %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+ 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+			body {
+			background: url(http://subtlepatterns.com/patterns/scribble_light.png) ;
+			}
+			
+			.card {
+  position: relative;
+  float: left;
+  margin-top:3%;
+  margin-right: 50px;
+  width: 200px;
+  height: 180px;
+  border-radius: 10px;
+  background: #fff;
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+
+.card img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+height:100px;
+width:100px;
+}
+
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
+		</style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <% if(username!=null){ %>
+                <li>
+                   <font color="white" weight="12"> Hi <%= username %></font>
+                    </li>
+                    <%}%>
+                
+                <li>
+                    <% if(username==null){ %>
+                    <a href="/store/login">Login</a>
+                    <%}
+                    	else
+                    	{ %>
+                    	
+                    	<a href="/store/logout">Logout</a>
+                    	<% } %>
+                </li>
+                <li>
+                	<a href="/">Home</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="padding-right: 150px;">
+           
+           
+	<% if (productArray.length) { %>
+
+<% productArray.forEach(function(productArray) { %>
+
+<div class="card">
+
+<br>
+
+<p>
+
+<center><h4>Title : <%= JSON.stringify(productArray["productname"]["S"]) %></h4></center>
+<center><h4>Cost per unit : <%= JSON.stringify(productArray["unitcost"]["N"]) %></h4></center>
+<form action="/updatecart/<%= JSON.stringify(productArray["id"]["S"]) %>" method="post">
+
+<center>Current Quantity : <input type="text" name="quantityupdate" value="<%= productArray["quantity"]["N"] %>" /></center>
+<% if(error!=null){ %>
+<center>Available Quantity : <%= error %></center>
+<% } %>
+<center><input type="submit" value="Update Cart"></center>
+<a href="/removefromcart/<%= (productArray["id"]["S"]) %>">Remove From Cart</a>
+</form>
+
+
+</p>
+
+</div>
+
+
+<% }); %>
+<br>
+<p>
+<a href="/checkout" class="button">checkout</a>
+</p>
+ total cost : <%= cost %>
+<% } %>
+
+
+
+		
+	
+	
+                </div>
+           
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>

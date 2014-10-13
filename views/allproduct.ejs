@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><%= tittle %></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/css/simple-sidebar.css" rel="stylesheet">
+ 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+			body {
+			background: url(http://subtlepatterns.com/patterns/scribble_light.png) ;
+			}
+			
+			.card {
+  position: relative;
+  float: left;
+  margin-top:3%;
+  margin-right: 50px;
+  width: 200px;
+  height: 180px;
+  border-radius: 10px;
+  background: #fff;
+  -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+}
+
+.card img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+height:100px;
+width:100px;
+}
+		</style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <% if(username!=null){ %>
+                <li>
+                   <font color="white" weight="12"> Hi <%= username %></font>
+                    </li>
+                    <%}%>
+                <li>
+                	 <% if(username!=null && username!='admin'){ %>
+						  <a href="/store/shoppingcart">Shopping Cart</a>
+				<% } %>
+                </li>
+                <li>
+                    <% if(username==null){ %>
+                    <a href="/store/login">Login</a>
+                    
+                    <%}
+                    	else
+                    	{ %>
+                    	
+                    	<a href="/store/logout">Logout</a>
+                    	<% } %>
+                </li>
+                
+                 <li>
+                	 <% if(username==null){ %>
+						  <a href="/store/register">Register</a>
+				<% } %>
+                </li>
+                <li>
+                	 <% if(username=='admin'){ %>
+						  <a href="/store/addnewproduct">Add product</a>
+				<% } %>
+                </li>
+                <li>
+                	 <% if(username=='admin'){ %>
+						  <a href="/store/updateproduct">Update product</a>
+				<% } %>
+                </li>
+                <li>
+                	 <% if(username=='admin'){ %>
+						  <a href="/store/deleteproduct">Delete product</a>
+				<% } %>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="padding-right: 150px;">
+           
+           
+	<% if (productArray.length) { %>
+<% productArray.forEach(function(productArray) { %>
+		<div class="card">
+	<br>		
+<p>
+<center><h4>Title : <%= JSON.stringify(productArray["name"]["S"]) %></h4></center>
+<center><h4>Desctiption : <%= JSON.stringify(productArray["description"]["S"]) %></h4></center>
+<center><h4>Cost : <%= JSON.stringify(productArray["cost"]["N"]) %></h4></center>
+			</p>
+			<p>
+			<center>
+				<form action="/addtocart/<%= JSON.stringify(productArray["id"]["S"])%>/<%= JSON.stringify(productArray["name"]["S"]) %>/<%= JSON.stringify(productArray["cost"]["N"]) %>" method="post">
+				 <% if(username!=null && username!='admin'){ %>
+				<input type="submit" value="Add to cart"></input>
+				<% } %>
+				</form>
+				</center>
+			</p>
+			
+			</div>
+		
+<% }); %>
+<% } %>
+		
+	
+	
+                </div>
+            
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery Version 1.11.0 -->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
